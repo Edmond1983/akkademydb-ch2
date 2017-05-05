@@ -1,0 +1,26 @@
+package com.akkademy
+
+import akka.util.Timeout
+import org.scalatest.{BeforeAndAfterEach, FunSpecLike, Matchers}
+import akka.actor.ActorSystem
+import com.akkademy.messages.SetRequest
+import akka.testkit.TestActorRef
+import scala.concurrent.duration._
+
+class AkkademyDbSpec extends FunSpecLike with Matchers with BeforeAndAfterEach
+{
+  implicit val system = ActorSystem()
+  describe("akkademyDB")
+  {
+      describe("given SetRequest")
+      {
+        it ("should place key/value into map")
+        {
+          val actorRef = TestActorRef(new AkkademyDB)
+          actorRef ! SetRequest("key2","value2")
+          val akkademyDb = actorRef.underlyingActor
+          akkademyDb.map.get("key2") should equal(Some("value2"))
+        }
+      }
+  }
+}
