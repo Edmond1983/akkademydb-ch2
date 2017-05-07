@@ -1,7 +1,7 @@
 package com.akkademy
 
 import com.akkademy.messages._
-import akka.actor.Actor
+import akka.actor.{Props, ActorSystem, Status, Actor}
 import akka.event.Logging
 import scala.collection.mutable.HashMap
 
@@ -17,7 +17,7 @@ class AkkademyDB extends Actor
 	sender() ! Status.Success
     case GetRequest(key) =>
 	log.info("received GetRequest - key: {}", key)
-	val response: Option[String] = map.get(key)
+	val response: Option[Object] = map.get(key)
 	response match
 		{
 			case Some(x) => sender() ! x
@@ -29,5 +29,5 @@ class AkkademyDB extends Actor
 
 object Main extends App {
 	val system = ActorSystem("akkademy")
-	system.actorOf(Props[AkkademyDb], name = "akkademy-db")
+	system.actorOf(Props[AkkademyDB], name = "akkademy-db")
 }

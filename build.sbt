@@ -1,6 +1,8 @@
-name := """akkademydb-ch1"""
+name := "akkademy-db"
 
-version := "1.0"
+organization := "com.akkademy-db"
+
+version := "0.0.1-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
@@ -12,3 +14,6 @@ libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-actor" % "2.3.11",
 			"com.typesafe.akka" %% "akka-testkit" % "2.3.11" % "test",
 			"com.typesafe.akka" %% "akka-remote" % "2.3.6")
 
+mappings in (Compile, packageBin) ~= { _.filterNot { case (_, name) =>
+	Seq("application.conf").contains(name)
+}}
